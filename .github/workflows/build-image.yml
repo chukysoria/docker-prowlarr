@@ -9,7 +9,7 @@ env:
   USER: chukysoria
   IMAGE: prowlarr
   DESCRIPTION: "[Prowlarr](https://github.com/Prowlarr/Prowlarr) is a indexer manager/proxy built on the popular arr .net/reactjs base stack to integrate with your various PVR apps. Prowlarr supports both Torrent Trackers and Usenet Indexers. It integrates seamlessly with Sonarr, Radarr, Lidarr, and Readarr offering complete management of your indexers with no per app Indexer setup required (we do it all)."
-  BUILD_VERSION_ARG: PROWLARR_VERSION
+  BUILD_VERSION_ARG: PROWLARR_RELEASE
   ARCH: arm32v7
 
 jobs:
@@ -23,6 +23,11 @@ jobs:
         uses: docker/setup-qemu-action@v2
         with:
           platforms: arm
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+        with:
+          platforms: linux/arm/v7
 
       - name: Find latest release of app
         run: |
