@@ -1,12 +1,12 @@
 # syntax=docker/dockerfile:1
 
-FROM ghcr.io/linuxserver/baseimage-alpine:3.18
+FROM ghcr.io/chukysoria/baseimage-alpine:3.18
 
 # set version label
 ARG BUILD_DATE
 ARG VERSION
 ARG PROWLARR_RELEASE
-LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
+LABEL build_version="Chukyserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="Roxedus,thespad"
 
 # environment settings

@@ -1,0 +1,83 @@
+name: Build Image
+
+on:
+  release:
+    types: [published]
+  push:
+
+env:
+  USER: chukysoria
+  IMAGE: prowlarr
+  DESCRIPTION: "[Prowlarr](https://github.com/Prowlarr/Prowlarr) is a indexer manager/proxy built on the popular arr .net/reactjs base stack to integrate with your various PVR apps. Prowlarr supports both Torrent Trackers and Usenet Indexers. It integrates seamlessly with Sonarr, Radarr, Lidarr, and Readarr offering complete management of your indexers with no per app Indexer setup required (we do it all)."
+  BUILD_VERSION_ARG: PROWLARR_VERSION
+  ARCH: arm32v7
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set current date as env variable
+        run: echo "NOW=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: arm
+
+      - name: Find latest release of app
+        run: |
+          echo "EXT_RELEASE=$(curl -sL "https://prowlarr.servarr.com/v1/update/master/changes?runtime=netcore&os=linuxmusl" | jq -r '.[0].version')" >> "$GITHUB_ENV"
+  
+      - name: Sanite Release version
+        run: |
+          echo "EXT_RELEASE_CLEAN=$(echo '${{ env.EXT_RELEASE }}' | sed 's/[~,%@+;:/]//g')" >> "$GITHUB_ENV"
+  
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          # list of Docker images to use as base name for tags
+          images: |
+             ghcr.io/${{ env.USER }}/${{ env.IMAGE }}            
+          # generate Docker tags based on the following events/attributes
+          flavor: 
+            latest=true
+          tags: |
+            type=sha,prefix=${{ env.EXT_RELEASE_CLEAN }}-
+            type=sha,prefix=,suffix=-${{ github.ref_name }}
+            type=sha,prefix=${{ env.ARCH }}-${{ env.EXT_RELEASE_CLEAN }}-
+            type=sha,prefix=${{ env.ARCH }}-,suffix=-${{ github.ref_name }}
+            type=raw,value=latest,prefix=${{ env.ARCH }}-          
+          labels: |
+            org.opencontainers.image.created=${{ env.NOW }}
+            org.opencontainers.image.authors=Carlos Sanchez
+            org.opencontainers.image.url=https://github.com/${{ env.USER }}/docker-${{ env.IMAGE }}/packages
+            org.opencontainers.image.documentation=https://docs.linuxserver.io/images/docker-${{ env.IMAGE }}  
+            org.opencontainers.image.source=https://github.com/chukysoria/docker-${{ env.IMAGE }}  
+            org.opencontainers.image.version=${{ env.EXT_RELEASE_CLEAN }}-ls${{ github.ref_name }}
+            org.opencontainers.image.revision=${{ github.sha }}
+            org.opencontainers.image.vendor=Carlos Sanchez
+            org.opencontainers.image.licenses=GPL-3.0-only
+            org.opencontainers.image.ref.name=${{ github.sha }}
+            org.opencontainers.image.title=${{ env.IMAGE }}  
+            org.opencontainers.image.description=${{ env.DESCRIPTION }}        
+
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          platforms: linux/arm/v7
+          push: ${{ github.event_name == 'release' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          pull: true
+          build-args: |
+            ${{ env.BUILD_VERSION_ARG }}=${{ env.EXT_RELEASE }}
+            VERSION=${{ github.ref_name }}
+            BUILD_DATE=${{ env.NOW }}
