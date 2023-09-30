@@ -1,13 +1,16 @@
 # syntax=docker/dockerfile:1
 
-FROM ghcr.io/chukysoria/baseimage-alpine:3.18
+ARG BUILD_FROM=ghcr.io/chukysoria/baseimage-alpine:v0.2.3
+
+FROM ${BUILD_FROM} 
 
 # set version label
 ARG BUILD_DATE
-ARG VERSION
-ARG PROWLARR_RELEASE
-LABEL build_version="Chukyserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
-LABEL maintainer="Roxedus,thespad"
+ARG BUILD_VERSION
+ARG BUILD_ARCH
+ARG BUILD_EXT_RELEASE="1.7.4.3769"
+LABEL build_version="Chukyserver.io version:- ${BUILD_VERSION} Build-date:- ${BUILD_DATE}"
+LABEL maintainer="chukysoria"
 
 # environment settings
 ARG PROWLARR_BRANCH="master"
@@ -20,18 +23,29 @@ RUN \
     sqlite-libs \
     xmlstarlet && \
   echo "**** install prowlarr ****" && \
+  case ${BUILD_ARCH} in \
+      "armv7") \
+          ARCH="arm" \
+          ;; \
+      "aarch64") \
+          ARCH="arm64" \
+          ;; \
+      "x86_64") \
+          ARCH="x64" \
+          ;; \
+      *) \
+          echo "Unknown architecture: ${BUILD_ARCH}" && \
+          exit 1 \
+          ;; \
+  esac && \
   mkdir -p /app/prowlarr/bin && \
-  if [ -z ${PROWLARR_RELEASE+x} ]; then \
-    PROWLARR_RELEASE=$(curl -sL "https://prowlarr.servarr.com/v1/update/${PROWLARR_BRANCH}/changes?runtime=netcore&os=linuxmusl" \
-    | jq -r '.[0].version'); \
-  fi && \
   curl -o \
     /tmp/prowlarr.tar.gz -L \
-    "https://prowlarr.servarr.com/v1/update/${PROWLARR_BRANCH}/updatefile?version=${PROWLARR_RELEASE}&os=linuxmusl&runtime=netcore&arch=arm" && \
+    "https://prowlarr.servarr.com/v1/update/${PROWLARR_BRANCH}/updatefile?version=${BUILD_EXT_RELEASE}&os=linuxmusl&runtime=netcore&arch=${ARCH}" && \
   tar xzf \
     /tmp/prowlarr.tar.gz -C \
     /app/prowlarr/bin --strip-components=1 && \
-  echo -e "UpdateMethod=docker\nBranch=${PROWLARR_BRANCH}\nPackageVersion=${VERSION}\nPackageAuthor=[linuxserver.io](https://www.linuxserver.io/)" > /app/prowlarr/package_info && \
+  echo -e "UpdateMethod=docker\nBranch=${PROWLARR_BRANCH}\nPackageVersion=${BUILD_VERSION}\nPackageAuthor=[linuxserver.io](https://www.linuxserver.io/)" > /app/prowlarr/package_info && \
   echo "**** cleanup ****" && \
   rm -rf \
     /app/prowlarr/bin/Prowlarr.Update \
