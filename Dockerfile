@@ -41,7 +41,7 @@ RUN \
   mkdir -p /app/prowlarr/bin && \
   curl -o \
     /tmp/prowlarr.tar.gz -L \
-    "https://prowlarr.servarr.com/v1/update/${PROWLARR_BRANCH}/updatefile?version=${BUILD_EXT_RELEASE}&os=linuxmusl&runtime=netcore&arch=${ARCH}" && \
+    "https://prowlarr.servarr.com/v1/update/${PROWLARR_BRANCH}/updatefile?version=${BUILD_EXT_RELEASE#v}&os=linuxmusl&runtime=netcore&arch=${ARCH}" && \
   tar xzf \
     /tmp/prowlarr.tar.gz -C \
     /app/prowlarr/bin --strip-components=1 && \
