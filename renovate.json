@@ -32,7 +32,7 @@
         "ARG BUILD_EXT_RELEASE=[\"']?(?<currentValue>.+?)[\"']?\\s+",
         "ext_release: (?<currentValue>.+)\\s+"
       ],
-      "versioningTemplate": "loose",
+
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "Prowlarr/Prowlarr"
     }
