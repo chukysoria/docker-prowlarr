@@ -24,17 +24,17 @@ RUN \
     xmlstarlet && \
   echo "**** install prowlarr ****" && \
   case ${BUILD_ARCH} in \
-      "armv7l") \
+      "armv7") \
           ARCH="arm" \
           ;; \
       "aarch64") \
           ARCH="arm64" \
-          ;;v\
+          ;; \
       "x86_64") \
           ARCH="x64" \
           ;; \
       *) \
-          echo "Unknown architecture: $ARCHITECTURE" && \
+          echo "Unknown architecture: ${BUILD_ARCH}" && \
           exit 1 \
           ;; \
   esac && \
