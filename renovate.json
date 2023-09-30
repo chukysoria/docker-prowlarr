@@ -6,7 +6,7 @@
   "commitMessagePrefix": "⬆️",
   "commitMessageTopic": "{{depName}}",
   "assignees": ["chukysoria"],
-  "regexManagers": [
+  "customManagers": [
     {
       "fileMatch": ["(^|/)Dockerfile$", "(^|/)build.yaml$"],
       "matchStringsStrategy": "any",
