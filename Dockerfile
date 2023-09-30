@@ -19,9 +19,9 @@ ENV XDG_CONFIG_HOME="/config/xdg"
 RUN \
   echo "**** install packages ****" && \
   apk add -U --upgrade --no-cache \
-    icu-libs \
-    sqlite-libs \
-    xmlstarlet && \
+    icu-libs=73.2-r2 \
+    sqlite-libs=3.41.2-r2 \
+    xmlstarlet=1.6.1-r2 && \
   echo "**** install prowlarr ****" && \
   case ${BUILD_ARCH} in \
       "armv7") \
