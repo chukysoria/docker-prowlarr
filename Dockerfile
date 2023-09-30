@@ -33,7 +33,7 @@ RUN \
       "x86_64") \
           ARCH="x64" \
           ;; \
-      *)
+      *) \
           echo "Unknown architecture: $ARCHITECTURE" && \
           exit 1 \
           ;; \
