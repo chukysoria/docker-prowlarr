@@ -32,7 +32,7 @@
         "ARG BUILD_EXT_RELEASE=[\"']?(?<currentValue>.+?)[\"']?\\s+",
         "ext_release: (?<currentValue>.+)\\s+"
       ],
-      "versioningTemplate": "regex:^v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)\\.(?<build>\\d+)$",
+      "versioningTemplate": "loose",
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "Prowlarr/Prowlarr"
     }
