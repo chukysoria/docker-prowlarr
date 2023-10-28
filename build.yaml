@@ -1,5 +1,5 @@
 ---
 build_from:
-  aarch64: ghcr.io/chukysoria/baseimage-alpine:v0.2.8
-  x86_64: ghcr.io/chukysoria/baseimage-alpine:v0.2.8
-  armv7: ghcr.io/chukysoria/baseimage-alpine:v0.2.8
+  aarch64: ghcr.io/chukysoria/baseimage-alpine:v0.2.9
+  x86_64: ghcr.io/chukysoria/baseimage-alpine:v0.2.9
+  armv7: ghcr.io/chukysoria/baseimage-alpine:v0.2.9
