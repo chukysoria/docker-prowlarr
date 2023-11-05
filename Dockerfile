@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-ARG BUILD_FROM=ghcr.io/chukysoria/baseimage-alpine:v0.2.9
+ARG BUILD_FROM=ghcr.io/chukysoria/baseimage-alpine:v0.3.0
 
 FROM ${BUILD_FROM} 
 
