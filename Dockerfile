@@ -8,7 +8,7 @@ FROM ${BUILD_FROM}
 ARG BUILD_DATE
 ARG BUILD_VERSION
 ARG BUILD_ARCH
-ARG BUILD_EXT_RELEASE="v1.11.4.4173"
+ARG BUILD_EXT_RELEASE="v1.12.2.4211"
 LABEL build_version="Chukyserver.io version:- ${BUILD_VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="chukysoria"
 
@@ -19,7 +19,7 @@ ENV XDG_CONFIG_HOME="/config/xdg"
 RUN \
   echo "**** install packages ****" && \
   apk add -U --upgrade --no-cache \
-    icu-libs=74.2-r0 \
+    icu-libs=74.1-r0 \
     sqlite-libs=3.44.2-r0 \
     xmlstarlet=1.6.1-r2 && \
   echo "**** install prowlarr ****" && \
