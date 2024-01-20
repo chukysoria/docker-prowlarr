@@ -57,4 +57,7 @@ COPY root/ /
 
 # ports and volumes
 EXPOSE 9696
+
 VOLUME /config
+
+HEALTHCHECK --interval=30s --timeout=30s --start-period=2m --start-interval=5s --retries=5 CMD ["/etc/s6-overlay/s6-rc.d/svc-prowlarr/data/check"]
