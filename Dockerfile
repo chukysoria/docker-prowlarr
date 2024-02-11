@@ -8,7 +8,7 @@ FROM ${BUILD_FROM}
 ARG BUILD_DATE
 ARG BUILD_VERSION
 ARG BUILD_ARCH
-ARG BUILD_EXT_RELEASE="v1.12.2.4211"
+ARG BUILD_EXT_RELEASE="v1.13.3.4273"
 LABEL build_version="Chukyserver.io version:- ${BUILD_VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="chukysoria"
 
