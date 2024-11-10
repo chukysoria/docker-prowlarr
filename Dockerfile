@@ -14,7 +14,9 @@ LABEL maintainer="chukysoria"
 
 # environment settings
 ARG PROWLARR_BRANCH="master"
-ENV XDG_CONFIG_HOME="/config/xdg"
+ENV XDG_CONFIG_HOME="/config/xdg" \
+  COMPlus_EnableDiagnostics=0 \
+  TMPDIR=/run/prowlarr-temp
 
 RUN \
   echo "**** install packages ****" && \
