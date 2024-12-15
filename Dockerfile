@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1@sha256:db1ff77fb637a5955317c7a3a62540196396d565f3dd5742e76dddbb6d75c4c5
 
-ARG BUILD_FROM=ghcr.io/chukysoria/baseimage-alpine:v0.6.25-3.20@sha256:058af9b1f3e48f0f88e37ae6f0b155afe75388add18cb11af652df316954dbfa
+ARG BUILD_FROM=ghcr.io/chukysoria/baseimage-alpine:v0.7.2-3.21
 FROM ${BUILD_FROM} 
 
 # set version label
@@ -21,7 +21,7 @@ RUN \
   echo "**** install packages ****" && \
   apk add -U --upgrade --no-cache \
     icu-libs=74.2-r0 \
-    sqlite-libs=3.45.3-r1 \
+    sqlite-libs=3.47.1-r0 \
     xmlstarlet=1.6.1-r2 && \
   echo "**** install prowlarr ****" && \
   case ${BUILD_ARCH} in \
