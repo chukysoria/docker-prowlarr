@@ -1,5 +1,5 @@
 ---
 build_from:
-  aarch64: ghcr.io/chukysoria/baseimage-alpine:v0.7.14-3.21@sha256:b48aae1f577b501f128277137637eeeba5ac1b061dab6fd1385742949838cd7a
-  x86_64: ghcr.io/chukysoria/baseimage-alpine:v0.7.14-3.21@sha256:b48aae1f577b501f128277137637eeeba5ac1b061dab6fd1385742949838cd7a
-  armv7: ghcr.io/chukysoria/baseimage-alpine:v0.7.14-3.21@sha256:b48aae1f577b501f128277137637eeeba5ac1b061dab6fd1385742949838cd7a
+  aarch64: ghcr.io/chukysoria/baseimage-alpine:v0.7.17-3.21@sha256:e6f0848357b6ea9886f7d147ff873679da187c4b10249e1da0254c7b2d4a46a5
+  x86_64: ghcr.io/chukysoria/baseimage-alpine:v0.7.17-3.21@sha256:e6f0848357b6ea9886f7d147ff873679da187c4b10249e1da0254c7b2d4a46a5
+  armv7: ghcr.io/chukysoria/baseimage-alpine:v0.7.17-3.21@sha256:e6f0848357b6ea9886f7d147ff873679da187c4b10249e1da0254c7b2d4a46a5
