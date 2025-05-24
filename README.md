@@ -3,7 +3,7 @@
 [![linuxserver.io](https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/linuxserver_medium.png)](https://linuxserver.io)
 
 [![Blog](https://img.shields.io/static/v1.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=linuxserver.io&message=Blog)](https://blog.linuxserver.io "all the things you can do with our containers including How-To guides, opinions and much more!")
-[![Discord](https://img.shields.io/discord/354974912613449730.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=Discord&logo=discord)](https://discord.gg/YWrKVTn "realtime support / chat with the community and the team.")
+[![Discord](https://img.shields.io/discord/354974912613449730.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=Discord&logo=discord)](https://linuxserver.io/discord "realtime support / chat with the community and the team.")
 [![Discourse](https://img.shields.io/discourse/https/discourse.linuxserver.io/topics.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=discourse)](https://discourse.linuxserver.io "post on our community forum.")
 [![Fleet](https://img.shields.io/static/v1.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=linuxserver.io&message=Fleet)](https://fleet.linuxserver.io "an online web interface which displays all of our maintained images.")
 [![GitHub](https://img.shields.io/static/v1.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=linuxserver.io&message=GitHub&logo=github)](https://github.com/linuxserver "view the source for all of our repositories.")
@@ -20,7 +20,7 @@ The [LinuxServer.io](https://linuxserver.io) team brings you another container r
 Find us at:
 
 * [Blog](https://blog.linuxserver.io) - all the things you can do with our containers including How-To guides, opinions and much more!
-* [Discord](https://discord.gg/YWrKVTn) - realtime support / chat with the community and the team.
+* [Discord](https://linuxserver.io/discord) - realtime support / chat with the community and the team.
 * [Discourse](https://discourse.linuxserver.io) - post on our community forum.
 * [Fleet](https://fleet.linuxserver.io) - an online web interface which displays all of our maintained images.
 * [GitHub](https://github.com/linuxserver) - view the source for all of our repositories.
@@ -77,9 +77,16 @@ Setup info can be found [here](https://wikijs.servarr.com/prowlarr/quick-start-g
 
 This image can be run with a read-only container filesystem. For details please [read the docs](https://docs.linuxserver.io/misc/read-only/).
 
+## Non-Root Operation
+
+This image can be run with a non-root user. For details please [read the docs](https://docs.linuxserver.io/misc/non-root/).
+
 ## Usage
 
 To help you get started creating a container from this image you can either use docker-compose or the docker cli.
+
+>[!NOTE]
+>Unless a parameter is flaged as 'optional', it is *mandatory* and a value must be provided.
 
 ### docker-compose (recommended, [click here for more info](https://docs.linuxserver.io/general/docker-compose))
 
@@ -120,12 +127,13 @@ Containers are configured using parameters passed at runtime (such as those abov
 
 | Parameter | Function |
 | :----: | --- |
-| `-p 9696` | The port for the Prowlarr web UI |
+| `-p 9696:9696` | The port for the Prowlarr web UI |
 | `-e PUID=1000` | for UserID - see below for explanation |
 | `-e PGID=1000` | for GroupID - see below for explanation |
 | `-e TZ=Etc/UTC` | specify a timezone to use, see this [list](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List). |
 | `-v /config` | Database and Prowlarr configs |
 | `--read-only=true` | Run container with a read-only filesystem. Please [read the docs](https://docs.linuxserver.io/misc/read-only/). |
+| `--user=1000:1000` | Run container with a non-root user. Please [read the docs](https://docs.linuxserver.io/misc/non-root/). |
 
 ## Environment variables from files (Docker secrets)
 
@@ -279,16 +287,17 @@ docker build \
   -t lscr.io/linuxserver/prowlarr:latest .
 ```
 
-The ARM variants can be built on x86_64 hardware using `multiarch/qemu-user-static`
+The ARM variants can be built on x86_64 hardware and vice versa using `lscr.io/linuxserver/qemu-static`
 
 ```bash
-docker run --rm --privileged multiarch/qemu-user-static:register --reset
+docker run --rm --privileged lscr.io/linuxserver/qemu-static --reset
 ```
 
 Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64`.
 
 ## Versions
 
+* **23.12.24:** - Rebase Alpine 3.21.
 * **31.05.24:** - Rebase Alpine 3.20.
 * **20.03.24:** - Rebase to Alpine 3.19.
 * **06.06.23:** - Rebase master to Alpine 3.18, deprecate armhf as per [https://www.linuxserver.io/armhf](https://www.linuxserver.io/armhf).
