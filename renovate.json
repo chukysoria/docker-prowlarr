@@ -1,40 +1,9 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "rebaseWhen": "behind-base-branch",
-  "dependencyDashboard": true,
-  "labels": ["dependencies", "no-stale"],
-  "commitMessagePrefix": "⬆️",
-  "commitMessageTopic": "{{depName}}",
-  "assignees": ["chukysoria"],
-  "customManagers": [
-    {
-      "fileMatch": ["(^|/)Dockerfile$", "(^|/)build.yaml$"],
-      "matchStringsStrategy": "any",
-      "matchStrings": [
-        "ARG BUILD_FROM=(?<depName>.*?):(?<currentValue>.*?)\\s+",
-        "(aarch64|armv7|x86_64):\\s[\"']?(?<depName>.*?):(?<currentValue>.*?)[\"']?\\s"
-      ],
-      "datasourceTemplate": "docker"
-    },
-    {
-      "fileMatch": ["(^|/)Dockerfile$"],
-      "matchStringsStrategy": "any",
-      "matchStrings": [
-        "\\s(?<package>[a-z0-9][a-z0-9-_]+)=(?<currentValue>[a-z0-9-_.]+)(\\s+|,)"
-      ],
-      "versioningTemplate": "loose",
-      "datasourceTemplate": "repology",
-      "depNameTemplate": "alpine_3_18/{{package}}"
-    },
-    {
-      "fileMatch": ["(^|/)Dockerfile$", "(^|/)config.yaml$"],
-      "matchStrings": [
-        "ARG BUILD_EXT_RELEASE=[\"']?(?<currentValue>.+?)[\"']?\\s+",
-        "ext_release: (?<currentValue>.+)\\s+"
-      ],
-      "versioningTemplate": "loose",
-      "datasourceTemplate": "github-releases",
-      "depNameTemplate": "Prowlarr/Prowlarr"
-    }
+  "extends": [
+    "local>chukysoria/renovate-config",
+    "local>chukysoria/renovate-config:docker-build",
+    "local>chukysoria/renovate-config:os-package(alpine_3_21)",
+    "local>chukysoria/renovate-config:ext-release(github-releases,Prowlarr/Prowlarr)"
   ]
 }

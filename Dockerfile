@@ -1,26 +1,27 @@
-# syntax=docker/dockerfile:1
+# syntax=docker/dockerfile:1@sha256:9857836c9ee4268391bb5b09f9f157f3c91bb15821bb77969642813b0d00518d
 
-ARG BUILD_FROM=ghcr.io/chukysoria/baseimage-alpine:v0.3.3
-
+ARG BUILD_FROM=ghcr.io/chukysoria/baseimage-alpine:v0.7.14-3.21@sha256:b48aae1f577b501f128277137637eeeba5ac1b061dab6fd1385742949838cd7a
 FROM ${BUILD_FROM} 
 
 # set version label
 ARG BUILD_DATE
 ARG BUILD_VERSION
-ARG BUILD_ARCH
-ARG BUILD_EXT_RELEASE="v1.10.5.4116"
+ARG BUILD_ARCH=x86_64
+ARG BUILD_EXT_RELEASE="v1.35.1.5034"
 LABEL build_version="Chukyserver.io version:- ${BUILD_VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="chukysoria"
 
 # environment settings
 ARG PROWLARR_BRANCH="master"
-ENV XDG_CONFIG_HOME="/config/xdg"
+ENV XDG_CONFIG_HOME="/config/xdg" \
+  COMPlus_EnableDiagnostics=0 \
+  TMPDIR=/run/prowlarr-temp
 
 RUN \
   echo "**** install packages ****" && \
   apk add -U --upgrade --no-cache \
-    icu-libs=73.2-r2 \
-    sqlite-libs=3.41.2-r2 \
+    icu-libs=74.2-r0 \
+    sqlite-libs=3.48.0-r2 \
     xmlstarlet=1.6.1-r2 && \
   echo "**** install prowlarr ****" && \
   case ${BUILD_ARCH} in \
@@ -57,4 +58,7 @@ COPY root/ /
 
 # ports and volumes
 EXPOSE 9696
+
 VOLUME /config
+
+HEALTHCHECK --interval=30s --timeout=30s --start-period=2m --start-interval=5s --retries=5 CMD ["/etc/s6-overlay/s6-rc.d/svc-prowlarr/data/check"]
