@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1@sha256:9857836c9ee4268391bb5b09f9f157f3c91bb15821bb77969642813b0d00518d
 
-ARG BUILD_FROM=ghcr.io/chukysoria/baseimage-alpine:v0.8.1-3.22@sha256:308e9c2c52121a5f33cbbbb5ea52a1719b19ac40fd3c54238486c815e69b6275
+ARG BUILD_FROM=ghcr.io/chukysoria/baseimage-alpine:v0.8.2-3.22@sha256:73c5f12335adbe9127931176a85e6c745d32ac9367bca6638a9bbd48febb27e2
 FROM ${BUILD_FROM} 
 
 # set version label
@@ -20,8 +20,8 @@ ENV XDG_CONFIG_HOME="/config/xdg" \
 RUN \
   echo "**** install packages ****" && \
   apk add -U --upgrade --no-cache \
-    icu-libs=74.2-r0 \
-    sqlite-libs=3.48.0-r2 \
+    icu-libs=76.1-r0 \
+    sqlite-libs=3.49.2-r0 \
     xmlstarlet=1.6.1-r2 && \
   echo "**** install prowlarr ****" && \
   case ${BUILD_ARCH} in \
