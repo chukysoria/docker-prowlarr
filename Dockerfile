@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1@sha256:b6afd42430b15f2d2a4c5a02b919e98a525b785b1aaff16747d2f623364e39b6
 
-ARG BUILD_FROM=ghcr.io/chukysoria/baseimage-alpine:v1.0.2-3.23@sha256:4533deb07a1741f49b73a9d7db1442f988a3799f294a9298d2017ad86c1a5bb2
+ARG BUILD_FROM=ghcr.io/chukysoria/baseimage-alpine:v1.0.3-3.23@sha256:8c6a2a8ce82ae40a583bf72b0df779ff8135083e23d611ff8ad5169522523be1
 FROM ${BUILD_FROM} 
 
 # set version label
