@@ -21,7 +21,7 @@ RUN \
   echo "**** install packages ****" && \
   apk add -U --upgrade --no-cache \
     icu-libs=78.1-r0 \
-    sqlite-libs=3.53.2-r0 \
+    sqlite-libs=3.53.4-r0 \
     xmlstarlet=1.6.1-r2 && \
   echo "**** install prowlarr ****" && \
   case ${BUILD_ARCH} in \
